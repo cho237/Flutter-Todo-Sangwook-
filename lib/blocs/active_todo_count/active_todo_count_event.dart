@@ -1,21 +1,22 @@
-// ignore_for_file: public_member_api_docs, sort_constructors_first
 part of 'active_todo_count_bloc.dart';
 
-class ActiveTodoCountEvent extends Equatable {
+sealed class ActiveTodoCountEvent extends Equatable {
   const ActiveTodoCountEvent();
 
   @override
   List<Object> get props => [];
 }
 
+final class CalculateActiveTodoCountEvent extends ActiveTodoCountEvent {
+  const CalculateActiveTodoCountEvent({
+    required this.activeTodoCount,
+  });
 
-class CalculateActiveTodoCountEvent extends ActiveTodoCountEvent {
   final int activeTodoCount;
-
-  CalculateActiveTodoCountEvent({required this.activeTodoCount});
-  @override
-  List<Object> get props => [activeTodoCount];
 
   @override
   String toString() => 'CalculateActiveTodoCountEvent(activeTodoCount: $activeTodoCount)';
+
+  @override
+  List<Object> get props => [activeTodoCount];
 }

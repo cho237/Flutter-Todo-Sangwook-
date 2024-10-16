@@ -3,9 +3,11 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 
 class Debounce {
-  final int milliseconds;
+  Debounce({
+    this.milliseconds = 500,
+  });
 
-  Debounce({this.milliseconds = 500});
+  final int milliseconds;
 
   Timer? _timer;
 

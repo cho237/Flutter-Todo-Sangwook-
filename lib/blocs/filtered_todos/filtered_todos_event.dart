@@ -1,7 +1,6 @@
-// ignore_for_file: public_member_api_docs, sort_constructors_first
 part of 'filtered_todos_bloc.dart';
 
-class FilteredTodosEvent extends Equatable {
+sealed class FilteredTodosEvent extends Equatable {
   const FilteredTodosEvent();
 
   @override
@@ -9,14 +8,15 @@ class FilteredTodosEvent extends Equatable {
 }
 
 class CalculateFilteredTodosEvent extends FilteredTodosEvent {
+  const CalculateFilteredTodosEvent({
+    required this.filteredTodos,
+  });
+
   final List<Todo> filteredTodos;
 
-  CalculateFilteredTodosEvent({required this.filteredTodos});
+  @override
+  String toString() => 'CalculateFilteredTodosEvent(filteredTodos: $filteredTodos)';
 
   @override
-  String toString() =>
-      'CalculateFilteredTodosEvent(filteredTodos: $filteredTodos)';
-
-        @override
   List<Object> get props => [filteredTodos];
 }

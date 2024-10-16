@@ -6,7 +6,7 @@ import '../../models/todo_model.dart';
 part 'todo_filter_state.dart';
 
 class TodoFilterCubit extends Cubit<TodoFilterState> {
-  TodoFilterCubit() : super(TodoFilterState.inial());
+  TodoFilterCubit() : super(TodoFilterState.initial());
 
   void changeFilter(Filter newFilter) {
     emit(state.copyWith(filter: newFilter));

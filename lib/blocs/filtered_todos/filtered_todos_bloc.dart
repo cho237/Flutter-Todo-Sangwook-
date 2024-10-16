@@ -1,41 +1,42 @@
+// ignore_for_file: no_leading_underscores_for_local_identifiers
+
 import 'dart:async';
 
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
-import 'package:todo/blocs/blocs.dart';
-import 'package:todo/models/todo_model.dart';
+
+import '../../models/todo_model.dart';
+import '../blocs.dart';
 
 part 'filtered_todos_event.dart';
 part 'filtered_todos_state.dart';
 
-class FilteredTodosBloc extends Bloc<FilteredTodosEvent, FilterTodosState> {
+class FilteredTodosBloc extends Bloc<FilteredTodosEvent, FilteredTodosState> {
+  late StreamSubscription todoFilterSubscription;
+  late StreamSubscription todoSearchSubscription;
+  late StreamSubscription todoListSubscription;
+
+  final List<Todo> initialTodos;
+
   final TodoFilterBloc todoFilterBloc;
   final TodoSearchBloc todoSearchBloc;
   final TodoListBloc todoListBloc;
-  final List<Todo> initialTodos;
 
-  late final StreamSubscription _todoSearchBlocSub;
-  late final StreamSubscription _todoFilterBlocSub;
-  late final StreamSubscription _todoListBlocSub;
-
-  FilteredTodosBloc(
-      {required this.todoFilterBloc,
-      required this.todoSearchBloc,
-      required this.todoListBloc,
-      required this.initialTodos})
-      : super(FilterTodosState(filteredTodos: initialTodos)) {
-    _todoFilterBlocSub =
-        todoFilterBloc.stream.listen((TodoFilterState todoFilterState) {
+  FilteredTodosBloc({
+    required this.initialTodos,
+    required this.todoFilterBloc,
+    required this.todoSearchBloc,
+    required this.todoListBloc,
+  }) : super(FilteredTodosState(filteredTodos: initialTodos)) {
+    todoFilterSubscription = todoFilterBloc.stream.listen((TodoFilterState todoFilterState) {
       setFilteredTodos();
     });
 
-    _todoSearchBlocSub =
-        todoSearchBloc.stream.listen((TodoSearchState todoSearchState) {
+    todoSearchSubscription = todoSearchBloc.stream.listen((TodoSearchState todoSearchState) {
       setFilteredTodos();
     });
 
-    _todoListBlocSub =
-        todoListBloc.stream.listen((TodoListState todoListState) {
+    todoListSubscription = todoListBloc.stream.listen((TodoListState todoListState) {
       setFilteredTodos();
     });
 
@@ -49,14 +50,11 @@ class FilteredTodosBloc extends Bloc<FilteredTodosEvent, FilterTodosState> {
 
     switch (todoFilterBloc.state.filter) {
       case Filter.active:
-        _filteredTodos = todoListBloc.state.todos
-            .where((Todo todo) => !todo.completed)
-            .toList();
+        _filteredTodos = todoListBloc.state.todos.where((Todo todo) => !todo.completed).toList();
         break;
       case Filter.completed:
-        _filteredTodos = todoListBloc.state.todos
-            .where((Todo todo) => todo.completed)
-            .toList();
+        _filteredTodos = todoListBloc.state.todos.where((Todo todo) => todo.completed).toList();
+        break;
       case Filter.all:
       default:
         _filteredTodos = todoListBloc.state.todos;
@@ -66,7 +64,7 @@ class FilteredTodosBloc extends Bloc<FilteredTodosEvent, FilterTodosState> {
     if (todoSearchBloc.state.searchTerm.isNotEmpty) {
       _filteredTodos = _filteredTodos
           .where((Todo todo) =>
-              todo.desc.toLowerCase().contains(todoSearchBloc.state.searchTerm))
+              todo.desc.toLowerCase().contains(todoSearchBloc.state.searchTerm.toLowerCase()))
           .toList();
     }
 
@@ -75,9 +73,9 @@ class FilteredTodosBloc extends Bloc<FilteredTodosEvent, FilterTodosState> {
 
   @override
   Future<void> close() {
-    _todoListBlocSub.cancel();
-    _todoSearchBlocSub.cancel();
-    _todoFilterBlocSub.cancel();
+    todoFilterSubscription.cancel();
+    todoSearchSubscription.cancel();
+    todoListSubscription.cancel();
     return super.close();
   }
 }

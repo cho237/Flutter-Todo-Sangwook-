@@ -1,27 +1,26 @@
-// ignore_for_file: public_member_api_docs, sort_constructors_first
 part of 'filtered_todos_cubit.dart';
 
-class FilterTodosState extends Equatable {
-  final List<Todo> filteredTodos;
-
-  FilterTodosState({
+final class FilteredTodosState extends Equatable {
+  const FilteredTodosState({
     required this.filteredTodos,
   });
 
-  factory FilterTodosState.initial() {
-    return FilterTodosState(filteredTodos: []);
+  factory FilteredTodosState.initial() {
+    return const FilteredTodosState(filteredTodos: []);
   }
+
+  final List<Todo> filteredTodos;
 
   @override
   List<Object> get props => [filteredTodos];
 
   @override
-  bool get stringify => true;
+  String toString() => 'FilteredTodosState(filteredTodos: $filteredTodos)';
 
-  FilterTodosState copyWith({
+  FilteredTodosState copyWith({
     List<Todo>? filteredTodos,
   }) {
-    return FilterTodosState(
+    return FilteredTodosState(
       filteredTodos: filteredTodos ?? this.filteredTodos,
     );
   }

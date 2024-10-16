@@ -1,4 +1,3 @@
-// ignore_for_file: public_member_api_docs, sort_constructors_first
 part of 'todo_list_bloc.dart';
 
 sealed class TodoListEvent extends Equatable {
@@ -8,48 +7,60 @@ sealed class TodoListEvent extends Equatable {
   List<Object> get props => [];
 }
 
-class AddTodoEvent extends TodoListEvent {
+final class AddTodoEvent extends TodoListEvent {
+  const AddTodoEvent({
+    required this.todoDesc,
+  });
+
   final String todoDesc;
 
-  AddTodoEvent({required this.todoDesc});
+  @override
+  String toString() => 'AddTodoEvent(todoDesc: $todoDesc)';
+
   @override
   List<Object> get props => [todoDesc];
-
-  @override
-  String toString() => 'AddTodo(todoDesc: $todoDesc)';
 }
 
-class EditTodoEvent extends TodoListEvent {
+final class EditTodoEvent extends TodoListEvent {
+  const EditTodoEvent({
+    required this.id,
+    required this.todoDesc,
+  });
+
   final String id;
   final String todoDesc;
 
-  EditTodoEvent({required this.id, required this.todoDesc});
+  @override
+  String toString() => 'EditTodoEvent(id: $id, todoDesc: $todoDesc)';
 
   @override
   List<Object> get props => [id, todoDesc];
-
-  @override
-  String toString() => 'EditTodo(id: $id, todoDesc: $todoDesc)';
 }
 
-class ToggleTodoEvent extends TodoListEvent {
+final class ToggleTodoEvent extends TodoListEvent {
+  const ToggleTodoEvent({
+    required this.id,
+  });
+
   final String id;
 
-  ToggleTodoEvent({required this.id});
+  @override
+  String toString() => 'ToggleTodoEvent(id: $id)';
+
   @override
   List<Object> get props => [id];
-
-  @override
-  String toString() => 'ToggleTodo(id: $id)';
 }
 
-class RemoveTodoEvent extends TodoListEvent {
+final class RemoveTodoEvent extends TodoListEvent {
+  const RemoveTodoEvent({
+    required this.todo,
+  });
+
   final Todo todo;
 
-  RemoveTodoEvent({required this.todo});
   @override
-  List<Object> get props => [todo];
+  String toString() => 'RemoveTodoEvent(todo: $todo)';
 
   @override
-  String toString() => 'RemoveTodo(todo: $todo)';
+  List<Object> get props => [todo];
 }

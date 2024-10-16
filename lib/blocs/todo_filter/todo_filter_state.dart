@@ -1,18 +1,21 @@
 part of 'todo_filter_bloc.dart';
 
-class TodoFilterState extends Equatable {
-  final Filter filter;
-  TodoFilterState({required this.filter});
+final class TodoFilterState extends Equatable {
+  const TodoFilterState({
+    required this.filter,
+  });
 
-  factory TodoFilterState.inial() {
-    return TodoFilterState(filter: Filter.all);
+  factory TodoFilterState.initial() {
+    return const TodoFilterState(filter: Filter.all);
   }
+
+  final Filter filter;
 
   @override
   List<Object> get props => [filter];
 
   @override
-  bool get stringify => true;
+  String toString() => 'TodoFilterState(filter: $filter)';
 
   TodoFilterState copyWith({
     Filter? filter,
