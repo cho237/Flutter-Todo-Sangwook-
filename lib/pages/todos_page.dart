@@ -10,7 +10,7 @@ class TodosPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SafeArea(
-      child: const Scaffold(
+      child: Scaffold(
         body: SingleChildScrollView(
           child: Padding(
               padding: EdgeInsets.symmetric(

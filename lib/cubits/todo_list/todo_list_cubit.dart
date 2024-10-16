@@ -29,7 +29,7 @@ class TodoListCubit extends Cubit<TodoListState> {
     emit(state.copyWith(todos: newTodos));
   }
 
-  void ToggleButtons(String id) {
+  void toggleTodo(String id) {
     final newTodos = state.todos.map((Todo todo) {
       if (todo.id == id) {
         return Todo(
