@@ -1,5 +1,5 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
-part of 'filter_todos_cubit.dart';
+part of 'filtered_todos_cubit.dart';
 
 class FilterTodosState extends Equatable {
   final List<Todo> filteredTodos;
